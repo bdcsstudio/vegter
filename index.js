@@ -10,3 +10,5 @@ import "./src/video/preview-hover";
 import "./src/video/webm-controller";
 
 import "./src/slider/modal";
+
+import "./src/footer-sfx";
