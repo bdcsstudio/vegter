@@ -1,28 +1,11 @@
-import { gsap } from 'gsap';
-
-document.addEventListener("DOMContentLoaded", function () {
-    function updateLottieVisibility() {
-        const colorMode = document.querySelector(".nav-bar").getAttribute("color-mode");
-        const lottiePurple = document.querySelector(".nav-menu_lottie-purple");
-        const lottieYellow = document.querySelector(".nav-menu_lottie-yellow");
-
-        if (colorMode === "yellow") {
-            gsap.set(lottiePurple, { display: "block" });
-            gsap.set(lottieYellow, { display: "none" });
-        } else if (colorMode === "purple") {
-            gsap.set(lottiePurple, { display: "none" });
-            gsap.set(lottieYellow, { display: "block" });
-        }
+$(document).ready(function () {
+    function e() {
+        var e = $(".nav-bar").attr("color-mode");
+        "yellow" === e ? ($(".nav-menu_lottie-purple").show(), $(".nav-menu_lottie-yellow").hide()) : "purple" === e && ($(".nav-menu_lottie-purple").hide(), $(".nav-menu_lottie-yellow").show());
     }
-
-    updateLottieVisibility();
-
-    const navBar = document.querySelector(".nav-bar");
-    new MutationObserver(function(mutations) {
-        for (let mutation of mutations) {
-            if (mutation.type === "attributes" && mutation.attributeName === "color-mode") {
-                updateLottieVisibility();
-            }
-        }
-    }).observe(navBar, { attributes: true });
+    e();
+    var t = document.querySelector(".nav-bar");
+    new MutationObserver(function (t) {
+        for (var o of t) "attributes" === o.type && "color-mode" === o.attributeName && e();
+    }).observe(t, { attributes: !0 });
 });
