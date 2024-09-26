@@ -4,14 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Flip } from 'gsap/Flip';
 import { Observer } from 'gsap/Observer';
 
-// Lenis Import
-import Lenis from '@studio-freight/lenis';
-
-// GSAP register
 gsap.registerPlugin(ScrollTrigger, Flip, Observer);
-
-// Make Lenis available globally if needed
-window.Lenis = Lenis;
 
 // Scripts
 import "./src/page-transition/script";

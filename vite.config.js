@@ -1,19 +1,11 @@
-import { defineConfig } from 'vite';
-
-export default defineConfig({
+export default {
     build: {
         minify: true,
         rollupOptions: {
             output: {
                 entryFileNames: "assets/index.js",
-                assetFileNames: "assets/[name][extname]",
-                manualChunks: {
-                    gsap: ['gsap', 'gsap/ScrollTrigger', 'gsap/Flip', 'gsap/Observer']
-                }
+                assetFileNames: "assets/[name][extname]"
             }
         }
-    },
-    optimizeDeps: {
-        include: ['gsap', 'gsap/ScrollTrigger', 'gsap/Flip', 'gsap/Observer']
     }
-});
+}
