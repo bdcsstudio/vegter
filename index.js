@@ -1,3 +1,5 @@
+import "./src/page-transition/script";
+
 import "./src/lenis/lenis";
 import "./src/global/disable-img-dragging";
 
