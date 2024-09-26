@@ -1,65 +1,76 @@
-import Lenis from 'lenis';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-"use strict"; // Fix Lenis in Safari
+import Lenis from '@studio-freight/lenis';
 
 let lenis;
 
-if (Webflow.env("editor") === undefined) {
-  // Add the destroy attribute to disable functionality
-  const shouldDestroyLenis = document.body.hasAttribute("data-lenis-destroy");
+function initLenis() {
+  // Check if we're not in the Webflow editor
+  if (typeof Webflow === 'undefined' || Webflow.env("editor") === undefined) {
+    // Check if Lenis should be destroyed
+    const shouldDestroyLenis = document.body.hasAttribute("data-lenis-destroy");
 
-  if (!shouldDestroyLenis) {
-    // add the infinite attribute to enable infinite scroll functionality
-    const isInfiniteScrollPage = document.body.hasAttribute("data-lenis-infinite");
+    if (!shouldDestroyLenis) {
+      // Check if infinite scroll is enabled
+      const isInfiniteScrollPage = document.body.hasAttribute("data-lenis-infinite");
 
-    // Initialize Lenis with appropriate settings
-    lenis = new Lenis({
-      lerp: 0.1,
-      wheelMultiplier: 0.7,
-      infinite: isInfiniteScrollPage, // Enable infinite scroll only on specific page
-      gestureOrientation: "vertical",
-      normalizeWheel: false,
-      smoothTouch: false
-    });
-
-    // Event listener for scroll events
-    lenis.on('scroll', (e) => {
-      console.log(e);
-    });
-
-    // RAF loop for updating scroll position
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Event handlers for starting and stopping the scroll
-    $("[data-lenis-start]").on("click", function () {
-      lenis.start();
-    });
-    $("[data-lenis-stop]").on("click", function () {
-      lenis.stop();
-    });
-    $("[data-lenis-toggle]").on("click", function () {
-      $(this).toggleClass("stop-scroll");
-      if ($(this).hasClass("stop-scroll")) {
-        lenis.stop();
-      } else {
-        lenis.start();
-      }
-    });
-
-    // Integration with GSAP ScrollTrigger if needed
-    function connectToScrollTrigger() {
-      lenis.on("scroll", ScrollTrigger.update);
-      gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
+      // Initialize Lenis
+      lenis = new Lenis({
+        lerp: 0.1,
+        wheelMultiplier: 0.7,
+        infinite: isInfiniteScrollPage,
+        gestureOrientation: "vertical",
+        normalizeWheel: false,
+        smoothTouch: false
       });
-      gsap.ticker.lagSmoothing(0);
+
+      // Lenis scroll event listener
+      lenis.on('scroll', (e) => {
+        console.log(e);
+      });
+
+      // RAF loop for Lenis
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+
+      // Connect Lenis to GSAP ScrollTrigger
+      function connectToScrollTrigger() {
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add((time) => {
+          lenis.raf(time * 1000);
+        });
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      // Initialize ScrollTrigger connection
+      connectToScrollTrigger();
+
+      // Event handlers for controlling Lenis
+      document.querySelectorAll("[data-lenis-start]").forEach(el => {
+        el.addEventListener("click", () => lenis.start());
+      });
+
+      document.querySelectorAll("[data-lenis-stop]").forEach(el => {
+        el.addEventListener("click", () => lenis.stop());
+      });
+
+      document.querySelectorAll("[data-lenis-toggle]").forEach(el => {
+        el.addEventListener("click", () => {
+          el.classList.toggle("stop-scroll");
+          if (el.classList.contains("stop-scroll")) {
+            lenis.stop();
+          } else {
+            lenis.start();
+          }
+        });
+      });
     }
-    // Uncomment this if using GSAP ScrollTrigger
-    connectToScrollTrigger();
   }
 }
+
+// Initialize Lenis when the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', initLenis);
+
+// Export lenis instance if needed elsewhere in your application
+export { lenis };
