@@ -1,5 +1,3 @@
-import Lenis from '@studio-freight/lenis';
-
 let lenis;
 
 function initLenis() {
@@ -23,28 +21,14 @@ function initLenis() {
       });
 
       // Lenis scroll event listener
-      lenis.on('scroll', (e) => {
-        console.log(e);
-      });
-
-      // RAF loop for Lenis
-      function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-      }
-      requestAnimationFrame(raf);
+      lenis.on('scroll', ScrollTrigger.update);
 
       // Connect Lenis to GSAP ScrollTrigger
-      function connectToScrollTrigger() {
-        lenis.on("scroll", ScrollTrigger.update);
-        gsap.ticker.add((time) => {
-          lenis.raf(time * 1000);
-        });
-        gsap.ticker.lagSmoothing(0);
-      }
+      gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+      });
 
-      // Initialize ScrollTrigger connection
-      connectToScrollTrigger();
+      gsap.ticker.lagSmoothing(0);
 
       // Event handlers for controlling Lenis
       document.querySelectorAll("[data-lenis-start]").forEach(el => {
@@ -65,6 +49,13 @@ function initLenis() {
           }
         });
       });
+
+      // Start the animation loop
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
     }
   }
 }
