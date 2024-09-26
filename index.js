@@ -1,4 +1,5 @@
 import "./src/page-transition/script";
+import "./src/page-transition/lottie-load";
 
 import "./src/lenis/lenis";
 import "./src/global/disable-img-dragging";
