@@ -1,5 +1,3 @@
-import { gsap } from 'gsap';
-
 document.addEventListener("DOMContentLoaded", function () {
     const e = document.querySelectorAll(".nav-menu_link"),
         t = document.querySelector(".nav-menu_hover-item"),

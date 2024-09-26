@@ -1,5 +1,3 @@
-import { gsap } from 'gsap';
-
 document.addEventListener("DOMContentLoaded", function () {
     const e = document.querySelector(".vegter-border"),
         o = document.querySelector(".nav-menu_trigger"),

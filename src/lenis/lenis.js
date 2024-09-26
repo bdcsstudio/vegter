@@ -1,5 +1,4 @@
 import Lenis from 'lenis';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 "use strict"; // Fix Lenis in Safari
 
