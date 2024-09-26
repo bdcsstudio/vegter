@@ -1,3 +1,12 @@
+// GSAP Libraries
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Flip } from 'gsap/Flip';
+import { Observer } from 'gsap/Observer';
+
+gsap.registerPlugin(ScrollTrigger, Flip, Observer);
+
+// Scripts
 import "./src/page-transition/script";
 import "./src/page-transition/lottie-load";
 

@@ -10,7 +10,7 @@
   "dependencies": {
     "@finsweet/attributes-mirrorclick": "^1.5.0",
     "@finsweet/attributes-scrolldisable": "^1.6.2",
-    "gsap": "^3.12.4",
+    "gsap": "^3.12.5",
     "lenis": "^1.1.6",
     "splitting": "^1.1.0",
     "swiper": "^11.0.5"
