@@ -1,31 +1,27 @@
 import MouseFollower from "mouse-follower";
-import gsap from "gsap";
+import { gsap } from "gsap";
 
 MouseFollower.registerGSAP(gsap);
 
-const cursor = new MouseFollower();
+document.addEventListener("DOMContentLoaded", () => {
+  const cursor = new MouseFollower({ speed: 0.8, skewing: 0, skewingText: 0 });
 
-document.addEventListener(
-    "scroll",
-    function () {
-        if (!window.mouseFollowerLoaded) {
-            window.mouseFollowerLoaded = !0;
-            const e = document.createElement("script");
-            (e.src = "https://unpkg.com/mouse-follower@1/dist/mouse-follower.min.js"),
-                (e.onload = function () {
-                    const e = new MouseFollower({ speed: 0.8, skewing: 0, skewingText: 0 });
-                    document.querySelectorAll("[cursor]").forEach((o) => {
-                        const t = o.getAttribute("cursor").toLowerCase();
-                        o.addEventListener("mouseenter", () => {
-                            "nieuws" === t ? e.setText("Bekijk nieuws") : "recept" === t ? e.setText("Bekijk recept") : e.setText("Bekijk product");
-                        }),
-                            o.addEventListener("mouseleave", () => {
-                                e.removeText();
-                            });
-                    });
-                }),
-                document.head.appendChild(e);
-        }
-    },
-    { once: !0 }
-);
+  document.querySelectorAll("[cursor]").forEach((element) => {
+    const cursorType = element.getAttribute("cursor").toLowerCase();
+    element.addEventListener("mouseenter", () => {
+      switch(cursorType) {
+        case "nieuws":
+          cursor.setText("Bekijk nieuws");
+          break;
+        case "recept":
+          cursor.setText("Bekijk recept");
+          break;
+        default:
+          cursor.setText("Bekijk product");
+      }
+    });
+    element.addEventListener("mouseleave", () => {
+      cursor.removeText();
+    });
+  });
+});
