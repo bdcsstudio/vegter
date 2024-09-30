@@ -1,3 +1,5 @@
 @import url("./src/lenis/lenis.css");
 
 @import url("./src/video/plyr-styles.css");
+
+@import "cursor";
